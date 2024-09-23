@@ -1,11 +1,20 @@
-hpccm --recipe hpc_recipe_2.py --format singularity > Singularity2
+hpccm --recipe hpc_recipe.py --format singularity > Singularity.def
 
-singularity exec osu_micro_benchmarks.sif mpirun -np 2 ./osu_latency
+singularity exec osu_micro_benchmarks.sif mpirun -np 2 ./osu_bw
+
+singularity exec osu_micro_benchmarks_5.sif mpirun -np 2 osu_bw
 
 -----------------------
 sudo singularity build osu_micro_benchmarks.sif Singularity.def
 
 singularity instance list
-singularity instance start --contain osu_micro_benchmarks.sif osu_benchmark
+singularity instance start --contain osu_micro_benchmarks_5.sif osu_benchmark
 singularity shell instance://osu_benchmark
 singularity instance stop osu_benchmark
+
+-----------------------
+
+install: /usr/bin/install -c osu_bw /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+
+Agradeceria muito se o Sr. pudesse considerar alguma nota nesta tarefa, mesmo com
+algum desconto pelo atraso. Obrigado
